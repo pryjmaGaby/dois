@@ -1,1 +1,1203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards de Programação</title>
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
 
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        /* Container for Flashcards */
+        #flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between flashcard and navigation */
+            width: 100%;
+            max-width: 500px; /* Max width for better readability */
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        /* Flashcard Styling */
+        .cartao {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 250px; /* Fixed height for consistent cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .cartao.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .cartao__conteudo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cartao__conteudo__pergunta,
+        .cartao__conteudo__resposta {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cartao__conteudo__pergunta p,
+        .cartao__conteudo__resposta p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        .cartao__conteudo__resposta {
+            transform: rotateY(180deg);
+            background-color: #e8f5e9; /* Light green for answers */
+            border-radius: 12px;
+            color: #28a745;
+        }
+
+        .cartao h3 {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .navigation button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Meus Flashcards de Programação</h1>
+
+        <section id="flashcard-container">
+            </section>
+
+        <div class="navigation">
+            <button id="prev-btn" disabled>Anterior</button>
+            <button id="next-btn">Próximo</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Projeto desenvolvido pela Alura, sem fins lucrativos.</p>
+    </footer>
+
+    <script>
+        const flashcardsData = [
+            {
+                category: "Programação",
+                question: "O que é JavaScript?",
+                answer: "JavaScript é uma linguagem de programação de alto nível, interpretada, para a web. É essencial para tornar páginas interativas."
+            },
+            {
+                category: "Programação",
+                question: "O que é CSS?",
+                answer: "CSS (Cascading Style Sheets) é uma linguagem de estilização usada para descrever a apresentação de um documento escrito em HTML."
+            },
+            {
+                category: "Conceitos Web",
+                question: "O que significa HTML?",
+                answer: "HTML (HyperText Markup Language) é a linguagem de marcação padrão para criar páginas web e seus conteúdos."
+            },
+            {
+                category: "Backend",
+                question: "Qual a função de um banco de dados?",
+                answer: "Um banco de dados serve para armazenar, gerenciar e recuperar dados de forma organizada e eficiente."
+            },
+            {
+                category: "Desenvolvimento",<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards de Programação</title>
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        /* Container for Flashcards */
+        #flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between flashcard and navigation */
+            width: 100%;
+            max-width: 500px; /* Max width for better readability */
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        /* Flashcard Styling */
+        .cartao {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 250px; /* Fixed height for consistent cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .cartao.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .cartao__conteudo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cartao__conteudo__pergunta,
+        .cartao__conteudo__resposta {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cartao__conteudo__pergunta p,
+        .cartao__conteudo__resposta p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        .cartao__conteudo__resposta {
+            transform: rotateY(180deg);
+            background-color: #e8f5e9; /* Light green for answers */
+            border-radius: 12px;
+            color: #28a745;
+        }
+
+        .cartao h3 {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .navigation button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Meus Flashcards de Programação</h1>
+
+        <section id="flashcard-container">
+            </section>
+
+        <div class="navigation">
+            <button id="prev-btn" disabled>Anterior</button>
+            <button id="next-btn">Próximo</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Projeto desenvolvido pela Alura, sem fins lucrativos.</p>
+    </footer>
+
+    <script>
+        const flashcardsData = [
+            {
+                category: "Programação",
+                question: "O que é JavaScript?",
+                answer: "JavaScript é uma linguagem de programação de alto nível, interpretada, para a web. É essencial para tornar páginas interativas."
+            },
+            {
+                category: "Programação",
+                question: "O que é CSS?",
+                answer: "CSS (Cascading Style Sheets) é uma linguagem de estilização usada para descrever a apresentação de um documento escrito em HTML."
+            },
+            {
+                category: "Conceitos Web",
+                question: "O que significa HTML?",
+                answer: "HTML (HyperText Markup Language) é a linguagem de marcação padrão para criar páginas web e seus conteúdos."
+            },
+            {
+                category: "Backend",
+                question: "Qual a função de um banco de dados?",
+                answer: "Um banco de dados serve para armazenar, gerenciar e recuperar dados de forma organizada e eficiente."
+            },
+            {
+                category: "Desenvolvimento",
+                question: "O que é um 'bug' em programação?",
+                answer: "Um 'bug' é um erro ou falha no código de um programa que causa um resultado inesperado ou incorreto."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function createFlashcard(cardData) {
+            const cardArticle = document.createElement('article');
+            cardArticle.classList.add('cartao');
+            cardArticle.dataset.category = cardData.category; // Store category
+
+            cardArticle.innerHTML = `
+                <div class="cartao__conteudo cartao__conteudo__frente">
+                    <h3>${cardData.category}</h3>
+                    <div class="cartao__conteudo__pergunta">
+                        <p>${cardData.question}</p>
+                    </div>
+                </div>
+                <div class="cartao__conteudo cartao__conteudo__verso">
+                    <div class="cartao__conteudo__resposta">
+                        <p>${cardData.answer}</p>
+                    </div>
+                </div>
+            `;
+
+            cardArticle.addEventListener('click', () => {
+                cardArticle.classList.toggle('flipped');
+            });
+
+            return cardArticle;
+        }
+
+        function displayCurrentCard() {
+            flashcardContainer.innerHTML = ''; // Clear previous card
+            const card = createFlashcard(flashcardsData[currentCardIndex]);
+            flashcardContainer.appendChild(card);
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
+        }<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards de Programação</title>
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        /* Container for Flashcards */
+        #flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between flashcard and navigation */
+            width: 100%;
+            max-width: 500px; /* Max width for better readability */
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        /* Flashcard Styling */
+        .cartao {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 250px; /* Fixed height for consistent cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .cartao.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .cartao__conteudo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cartao__conteudo__pergunta,
+        .cartao__conteudo__resposta {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cartao__conteudo__pergunta p,
+        .cartao__conteudo__resposta p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        .cartao__conteudo__resposta {
+            transform: rotateY(180deg);
+            background-color: #e8f5e9; /* Light green for answers */
+            border-radius: 12px;
+            color: #28a745;
+        }
+
+        .cartao h3 {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .navigation button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Meus Flashcards de Programação</h1>
+
+        <section id="flashcard-container">
+            </section>
+
+        <div class="navigation">
+            <button id="prev-btn" disabled>Anterior</button>
+            <button id="next-btn">Próximo</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Projeto desenvolvido pela Alura, sem fins lucrativos.</p>
+    </footer>
+    <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards de Programação</title>
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        /* Container for Flashcards */
+        #flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between flashcard and navigation */
+            width: 100%;
+            max-width: 500px; /* Max width for better readability */
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        /* Flashcard Styling */
+        .cartao {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 250px; /* Fixed height for consistent cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .cartao.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .cartao__conteudo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cartao__conteudo__pergunta,
+        .cartao__conteudo__resposta {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cartao__conteudo__pergunta p,
+        .cartao__conteudo__resposta p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        .cartao__conteudo__resposta {
+            transform: rotateY(180deg);
+            background-color: #e8f5e9; /* Light green for answers */
+            border-radius: 12px;
+            color: #28a745;
+        }
+
+        .cartao h3 {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .navigation button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Meus Flashcards de Programação</h1>
+
+        <section id="flashcard-container">
+            </section>
+
+        <div class="navigation">
+            <button id="prev-btn" disabled>Anterior</button>
+            <button id="next-btn">Próximo</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Projeto desenvolvido pela Alura, sem fins lucrativos.</p>
+    </footer>
+
+    <script>
+        const flashcardsData = [
+            {
+                category: "Programação",
+                question: "O que é JavaScript?",
+                answer: "JavaScript é uma linguagem de programação de alto nível, interpretada, para a web. É essencial para tornar páginas interativas."
+            },
+            {
+                category: "Programação",
+                question: "O que é CSS?",
+                answer: "CSS (Cascading Style Sheets) é uma linguagem de estilização usada para descrever a apresentação de um documento escrito em HTML."
+            },
+            {
+                category: "Conceitos Web",
+                question: "O que significa HTML?",
+                answer: "HTML (HyperText Markup Language) é a linguagem de marcação padrão para criar páginas web e seus conteúdos."
+            },
+            {
+                category: "Backend",
+                question: "Qual a função de um banco de dados?",
+                answer: "Um banco de dados serve para armazenar, gerenciar e recuperar dados de forma organizada e eficiente."
+            },
+            {
+                category: "Desenvolvimento",
+                question: "O que é um 'bug' em programação?",
+                answer: "Um 'bug' é um erro ou falha no código de um programa que causa um resultado inesperado ou incorreto."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function createFlashcard(cardData) {
+            const cardArticle = document.createElement('article');
+            cardArticle.classList.add('cartao');
+            cardArticle.dataset.category = cardData.category; // Store category
+
+            cardArticle.innerHTML = `
+                <div class="cartao__conteudo cartao__conteudo__frente">
+                    <h3>${cardData.category}</h3>
+                    <div class="cartao__conteudo__pergunta">
+                        <p>${cardData.question}</p>
+                    </div>
+                </div>
+                <div class="cartao__conteudo cartao__conteudo__verso">
+                    <div class="cartao__conteudo__resposta">
+                        <p>${cardData.answer}</p>
+                    </div>
+                </div>
+            `;
+
+            cardArticle.addEventListener('click', () => {
+                cardArticle.classList.toggle('flipped');
+            });
+
+            return cardArticle;
+        }
+
+        function displayCurrentCard() {
+            flashcardContainer.innerHTML = ''; // Clear previous card
+            const card = createFlashcard(flashcardsData[currentCardIndex]);
+            flashcardContainer.appendChild(card);
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards de Programação</title>
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        /* Container for Flashcards */
+        #flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Space between flashcard and navigation */
+            width: 100%;
+            max-width: 500px; /* Max width for better readability */
+            perspective: 1000px; /* For 3D flip effect */
+        }
+
+        /* Flashcard Styling */
+        .cartao {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 250px; /* Fixed height for consistent cards */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .cartao.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .cartao__conteudo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .cartao__conteudo__pergunta,
+        .cartao__conteudo__resposta {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cartao__conteudo__pergunta p,
+        .cartao__conteudo__resposta p {
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+        .cartao__conteudo__resposta {
+            transform: rotateY(180deg);
+            background-color: #e8f5e9; /* Light green for answers */
+            border-radius: 12px;
+            color: #28a745;
+        }
+
+        .cartao h3 {
+            font-size: 1em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .navigation button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .navigation button:hover {
+            background-color: #0056b3;
+        }
+
+        .navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            margin-top: auto; /* Pushes the footer to the bottom */
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Meus Flashcards de Programação</h1>
+
+        <section id="flashcard-container">
+            </section>
+
+        <div class="navigation">
+            <button id="prev-btn" disabled>Anterior</button>
+            <button id="next-btn">Próximo</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>Projeto desenvolvido pela Alura, sem fins lucrativos.</p>
+    </footer>
+
+    <script>
+        const flashcardsData = [
+            {
+                category: "Programação",
+                question: "O que é JavaScript?",
+                answer: "JavaScript é uma linguagem de programação de alto nível, interpretada, para a web. É essencial para tornar páginas interativas."
+            },
+            {
+                category: "Programação",
+                question: "O que é CSS?",
+                answer: "CSS (Cascading Style Sheets) é uma linguagem de estilização usada para descrever a apresentação de um documento escrito em HTML."
+            },
+            {
+                category: "Conceitos Web",
+                question: "O que significa HTML?",
+                answer: "HTML (HyperText Markup Language) é a linguagem de marcação padrão para criar páginas web e seus conteúdos."
+            },
+            {
+                category: "Backend",
+                question: "Qual a função de um banco de dados?",
+                answer: "Um banco de dados serve para armazenar, gerenciar e recuperar dados de forma organizada e eficiente."
+            },
+            {
+                category: "Desenvolvimento",
+                question: "O que é um 'bug' em programação?",
+                answer: "Um 'bug' é um erro ou falha no código de um programa que causa um resultado inesperado ou incorreto."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function createFlashcard(cardData) {
+            const cardArticle = document.createElement('article');
+            cardArticle.classList.add('cartao');
+            cardArticle.dataset.category = cardData.category; // Store category
+
+            cardArticle.innerHTML = `
+                <div class="cartao__conteudo cartao__conteudo__frente">
+                    <h3>${cardData.category}</h3>
+                    <div class="cartao__conteudo__pergunta">
+                        <p>${cardData.question}</p>
+                    </div>
+                </div>
+                <div class="cartao__conteudo cartao__conteudo__verso">
+                    <div class="cartao__conteudo__resposta">
+                        <p>${cardData.answer}</p>
+                    </div>
+                </div>
+            `;
+
+            cardArticle.addEventListener('click', () => {
+                cardArticle.classList.toggle('flipped');
+            });
+
+            return cardArticle;
+        }
+
+        function displayCurrentCard() {
+            flashcardContainer.innerHTML = ''; // Clear previous card
+            const card = createFlashcard(flashcardsData[currentCardIndex]);
+            flashcardContainer.appendChild(card);
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayCurrentCard();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                displayCurrentCard();
+            }
+        });
+
+        // Initial display
+        displayCurrentCard();
+    </script>
+</body>
+</html>
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                displayCurrentCard();
+            }
+        });
+
+        // Initial display
+        displayCurrentCard();
+    </script>
+</body>
+</html>
+    <script>
+        const flashcardsData = [
+            {
+                category: "Programação",
+                question: "O que é JavaScript?",
+                answer: "JavaScript é uma linguagem de programação de alto nível, interpretada, para a web. É essencial para tornar páginas interativas."
+            },
+            {
+                category: "Programação",
+                question: "O que é CSS?",
+                answer: "CSS (Cascading Style Sheets) é uma linguagem de estilização usada para descrever a apresentação de um documento escrito em HTML."
+            },
+            {
+                category: "Conceitos Web",
+                question: "O que significa HTML?",
+                answer: "HTML (HyperText Markup Language) é a linguagem de marcação padrão para criar páginas web e seus conteúdos."
+            },
+            {
+                category: "Backend",
+                question: "Qual a função de um banco de dados?",
+                answer: "Um banco de dados serve para armazenar, gerenciar e recuperar dados de forma organizada e eficiente."
+            },
+            {
+                category: "Desenvolvimento",
+                question: "O que é um 'bug' em programação?",
+                answer: "Um 'bug' é um erro ou falha no código de um programa que causa um resultado inesperado ou incorreto."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function createFlashcard(cardData) {
+            const cardArticle = document.createElement('article');
+            cardArticle.classList.add('cartao');
+            cardArticle.dataset.category = cardData.category; // Store category
+
+            cardArticle.innerHTML = `
+                <div class="cartao__conteudo cartao__conteudo__frente">
+                    <h3>${cardData.category}</h3>
+                    <div class="cartao__conteudo__pergunta">
+                        <p>${cardData.question}</p>
+                    </div>
+                </div>
+                <div class="cartao__conteudo cartao__conteudo__verso">
+                    <div class="cartao__conteudo__resposta">
+                        <p>${cardData.answer}</p>
+                    </div>
+                </div>
+            `;
+
+            cardArticle.addEventListener('click', () => {
+                cardArticle.classList.toggle('flipped');
+            });
+
+            return cardArticle;
+        }
+
+        function displayCurrentCard() {
+            flashcardContainer.innerHTML = ''; // Clear previous card
+            const card = createFlashcard(flashcardsData[currentCardIndex]);
+            flashcardContainer.appendChild(card);
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayCurrentCard();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                displayCurrentCard();
+            }
+        });
+
+        // Initial display
+        displayCurrentCard();
+    </script>
+</body>
+</html>
+
+        prevBtn.addEventListener('click', () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayCurrentCard();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                displayCurrentCard();
+            }
+        });
+
+        // Initial display
+        displayCurrentCard();
+    </script>
+</body>
+</html>
+                question: "O que é um 'bug' em programação?",
+                answer: "Um 'bug' é um erro ou falha no código de um programa que causa um resultado inesperado ou incorreto."
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const flashcardContainer = document.getElementById('flashcard-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function createFlashcard(cardData) {
+            const cardArticle = document.createElement('article');
+            cardArticle.classList.add('cartao');
+            cardArticle.dataset.category = cardData.category; // Store category
+
+            cardArticle.innerHTML = `
+                <div class="cartao__conteudo cartao__conteudo__frente">
+                    <h3>${cardData.category}</h3>
+                    <div class="cartao__conteudo__pergunta">
+                        <p>${cardData.question}</p>
+                    </div>
+                </div>
+                <div class="cartao__conteudo cartao__conteudo__verso">
+                    <div class="cartao__conteudo__resposta">
+                        <p>${cardData.answer}</p>
+                    </div>
+                </div>
+            `;
+
+            cardArticle.addEventListener('click', () => {
+                cardArticle.classList.toggle('flipped');
+            });
+
+            return cardArticle;
+        }
+
+        function displayCurrentCard() {
+            flashcardContainer.innerHTML = ''; // Clear previous card
+            const card = createFlashcard(flashcardsData[currentCardIndex]);
+            flashcardContainer.appendChild(card);
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentCardIndex === 0;
+            nextBtn.disabled = currentCardIndex === flashcardsData.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayCurrentCard();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                displayCurrentCard();
+            }
+        });
+
+        // Initial display
+        displayCurrentCard();
+    </script>
+</body>
+</html>
